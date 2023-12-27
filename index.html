@@ -130,12 +130,37 @@
                 </div>
             </div>
             <div class="section" id="section4">
-<!--                <video data-autoplay muted loop style="z-index: -3">-->
-<!--                    <source data-src="images/bg4.mp4" type="video/mp4" />-->
-<!--                </video>-->
                 <div class="video-overlay" style="font-family: 'Varela Round'; background: black">
                     <h1 class="p-5">Experience</h1>
                     <div class="p-5 row" id="abilityField">
+                    </div>
+                    <div class="text-center animate__animated aIn__backInLeft aOut__fadeOutDown  animate__delay-4s">
+                        <i class="fas fa-arrow-down fa-5x" style="animation: blink 2s linear infinite;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="section" id="section5">
+                <video data-autoplay muted loop style="z-index: -3">
+                    <source data-src="images/bg4.mp4" type="video/mp4"/>
+                </video>
+                <div class="video-overlay" style=" background: transparent">
+                    <h1 class="p-5">What's next?</h1>
+                    <div class="p-5 animate__animated aIn__fadeIn animate__delay-1s">
+                        <h4>Nowadays, we have been focusing on robot technology.</h4>
+                        <h4>There has been an incredible advancement in AI technology</h4>
+                        <h4>- both hardware and software - in the past few years.</h4>
+                        <h4>Brain has evolved, it's time for the body to develop</h4>
+                        <h4>and Robot Technology will be the key of the future.</h4>
+                        <div class="p-3"></div>
+                        <h4>We are eager to create that future of POSSIBILITY.</h4>
+                        <h4>Please give us the opportunity to explore and realize our dreams!</h4>
+                    </div>
+                    <div class="p-5 animate__animated aIn__fadeIn animate__delay-2s">
+                        <span style="margin-right: 20px">CONTACT US</span>
+                        <button type="button" class="btn btn-light" onclick="copyTextToClipboard('planninetynine2022@gmail.com')">planninetynine2022@gmail.com</button>
+                    </div>
+                    <div id="copyAlert" class="alert alert-success" style="display: none; width: 30%; margin-left: 50px" role="alert">
+                        E-Mail Address Has Been Copied!
                     </div>
                 </div>
             </div>
@@ -163,7 +188,7 @@
         let stopTyping = false
 
         var myFullpage = new fullpage('#fullpage', {
-            anchors:['home', 'team', 'projects', 'abilities'],
+            anchors:['home', 'team', 'projects', 'abilities', 'contact'],
             licenseKey: 'gplv3-license',
             afterLoad: function(origin, destination, direction, trigger) {
                 const animations = destination.item.children[0].getElementsByClassName('animate__animated')
@@ -309,13 +334,29 @@
             const projectField = document.getElementById('abilityField');
             AbilityMap.forEach((e, index) => {
                 projectField.innerHTML += `
-                        <div class="text-center col-1 animate__animated aIn__bounceInUp aOut__bounceOutDown ability" style="margin-bottom: 100px; animation-delay: ${index*0.2}s">
+                        <div class="text-center col-1 animate__animated aIn__bounceInUp aOut__fadeOut ability" style="margin-bottom: 100px; animation-delay: ${index*0.2}s">
                             <img src="images/ability${index}.png" class="card-img-top" style="width: 4rem;">
                             <div>${e.name}</div>
                         </div>`
             })
         }
         showAbilities()
+
+        function copyTextToClipboard(text) {
+            // 텍스트를 클립보드에 복사합니다.
+            navigator.clipboard.writeText(text).then(function() {
+                // "복사되었습니다." 메시지를 표시합니다.
+                var copyAlert = document.getElementById('copyAlert');
+                copyAlert.style.display = 'block';
+
+                // 2초 후에 메시지를 숨깁니다.
+                setTimeout(function() {
+                    copyAlert.style.display = 'none';
+                }, 2000);
+            }).catch(function(error) {
+                console.error('복사에 실패했습니다:', error);
+            });
+        }
     </script>
 </body>
 </html>
