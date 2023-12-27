@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik+Doodle+Shadow&Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik+Doodle+Shadow&Roboto:wght@300;400;500;600;700&family=Caveat&family=Varela+Round&display=swap" rel="stylesheet">
     <style>
         video {
             position: absolute;
@@ -32,10 +32,39 @@
             right: 0;
             bottom: 0;
             color: white; /* 텍스트 색상 */
+            background-color: rgba(0, 0, 0, 0.5); /* 반투명 검정 배경 */
         }
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
+        }
+        @keyframes comeLeft {
+            0% {
+                transform: translateX(0) scale(0);/* 이미지가 왼쪽에서 시작 */
+                opacity: 1;
+            }
+            50% {
+                transform: translateX(-200px) scale(1);/* 이미지가 왼쪽에서 시작 */
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-400px) scale(2); /* 이미지가 중앙에서 사라짐 */
+                opacity: 0;
+            }
+        }
+        @keyframes comeRight {
+            0% {
+                transform: translateX(0) scale(0);/* 이미지가 왼쪽에서 시작 */
+                opacity: 1;
+            }
+            50% {
+                transform: translateX(200px) scale(1);/* 이미지가 왼쪽에서 시작 */
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(400px) scale(2); /* 이미지가 중앙에서 사라짐 */
+                opacity: 0;
+            }
         }
     </style>
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
@@ -67,8 +96,8 @@
                 <video data-autoplay muted loop>
                     <source data-src="images/bg1.mp4" type="video/mp4" />
                 </video>
-                <div class="video-overlay" style="text-align: center; padding-top: 200px; font-family: 'Rubik Doodle Shadow">
-                    <h1 class="m-5 display-1 animate__animated aIn__backInLeft aOut__fadeOutDown animate__delay-1s">PLAN99</h1>
+                <div class="video-overlay" style="text-align: center; font-family: 'Rubik Doodle Shadow">
+                    <h1 class="m-5 display-1 animate__animated aIn__backInLeft aOut__fadeOutDown animate__delay-1s" style="padding-top: 15%">PLAN99</h1>
                     <h4 class="animate__animated aIn__backInLeft aOut__fadeOutDown animate__delay-2s">99 Plans, 99 years of the future</h4>
                     <div class="animate__animated aIn__backInLeft aOut__fadeOutDown animate__delay-4s" style="margin-top: 150px">
                         <i class="fas fa-arrow-down fa-5x" style="animation: blink 2s linear infinite;"></i>
@@ -76,18 +105,35 @@
                 </div>
             </div>
             <div class="section" id="section2">
-                <video data-autoplay muted loop>
+                <video data-autoplay muted loop style="z-index: -1">
                     <source data-src="images/bg2.mp4" type="video/mp4" />
                 </video>
                 <div class="video-overlay text-center" style="font-family: 'Press Start 2P';">
-                    <div class="p-5" style=" margin-bottom: 50px">
+                    <div class="p-5">
                         <h6 id="typing" style="white-space: pre; line-height: 30px"></h6>
                     </div>
                     <div id="profileButton"></div>
                     <h3 style="position: absolute; bottom: 15%; width: 100%; animation: blink 1s linear infinite;" class="text-success text-center" id="seeAllButton">Press [E] To See ALL</h3>
                 </div>
             </div>
-            <div class="section" id="section4"><h1>Just the simplest demo ever</h1></div>
+            <div class="section" id="section3">
+                <video data-autoplay muted loop style="z-index: -2">
+                    <source data-src="images/bg3.mp4" type="video/mp4"/>
+                </video>
+                <div class="video-overlay" style="font-family: 'Caveat'">
+                    <h1 class="text-center p-5 display-3 animate__animated aIn__fadeIn aOut__fadeOutDown">So, What We Did?</h1>
+                    <div class="text-center" id="projectField" style="padding-top: 2%">
+                    </div>
+                </div>
+            </div>
+            <div class="section" id="section4">
+<!--                <video data-autoplay muted loop style="z-index: -3">-->
+<!--                    <source data-src="images/bg4.mp4" type="video/mp4" />-->
+<!--                </video>-->
+                <div class="video-overlay" style="font-family: 'Varela Round'; background: black">
+                    <h1 class="p-5">Ability</h1>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -112,7 +158,6 @@
         let stopTyping = false
 
         var myFullpage = new fullpage('#fullpage', {
-            sectionsColor: ['#f2f2f2', '#4BBFC3', '#7BAABE', 'whitesmoke', '#ccddff'],
             anchors:['home', 'members', 'thirdPage', 'a'],
             licenseKey: 'gplv3-license',
             afterLoad: function(origin, destination, direction, trigger) {
@@ -180,13 +225,14 @@
 
         function addWhoWeAreLink() {
             const profileButton = document.getElementById('profileButton')
-            profileButton.innerHTML='<button class="btn btn-outline-light p-5" style="border: 1px solid white; width: 40%;">\n' +
-                '                            <div style="margin-bottom: 20px">Click this to see More!</div>\n' +
+            profileButton.innerHTML='<div><button class="btn btn-outline-light p-5 animate__animated animate__bounceIn" style="border: 1px solid white; width: 40%;">\n' +
+                '                            <div style="margin-bottom: 20px">Click this to know Us More!</div>\n' +
                 '                            <div>\n' +
-                '                                <img src="/images/profile1.jpeg" alt="profile" style="width: 200px; border-radius: 50%">\n' +
-                '                                <img src="/images/profile1.jpeg" alt="profile" style="width: 200px; border-radius: 50%">\n' +
+                '                                <img src="/images/profile1.png" alt="profile" style="width: 200px; border-radius: 50%">\n' +
+                '                                <img src="/images/profile1.png" alt="profile" style="width: 200px; border-radius: 50%">\n' +
                 '                            </div>\n' +
-                '                        </button>'
+                '                        </button></div>' +
+                '                        <i class="fas fa-arrow-down fa-3x" style="animation: blink 2s linear infinite; margin-top: 20px"></i>'
             const seeAllButton = document.getElementById('seeAllButton')
             seeAllButton.style.display = 'none'
         }
@@ -196,6 +242,37 @@
             const seeAllButton = document.getElementById('seeAllButton')
             seeAllButton.style.display = 'block'
         }
+
+        function showProjects(direction) {
+            const ProjectMap = [
+                { name: 'Korean Twins Youtube Channel', url: '' },
+                { name: 'Training Camp Newsletter', url: '' },
+                { name: 'Seopli, Dating App', url: '' },
+                { name: 'ShowStock, AI Stock Predictor', url: '' },
+                { name: 'PIK, Club Managing Solution', url: '' },
+            ]
+            const projectField = document.getElementById('projectField');
+            const num = Math.floor(Math.random() * ProjectMap.length)
+            const innerHtml =  `<a href="${ProjectMap[num].name.url}" style="border-radius: 10%; animation: come${direction} 5s linear infinite; position: absolute; ${direction}: 40%; color: white">
+                        <img src="/images/project${num}.png" style="width: 300px;">
+                        <h4>${ProjectMap[num].name}</h4>
+                    </a>`
+            projectField.insertAdjacentHTML('beforeend', innerHtml);
+            popFirstProject()
+        }
+
+        function popFirstProject() {
+            const projectField = document.getElementById('projectField');
+            if (projectField.children.length > 2) {
+                projectField.removeChild(projectField.firstElementChild)
+            }
+        }
+
+        let direction = 'Left'
+        setInterval(() => {
+            direction = direction === 'Left' ? 'Right' : 'Left'
+            showProjects(direction)
+        }, 2500)
     </script>
 </body>
 </html>
