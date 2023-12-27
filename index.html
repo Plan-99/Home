@@ -12,9 +12,11 @@
     />
     <!-- AOS CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css" />
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik+Doodle+Shadow&Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        #section1 video {
+        video {
             position: absolute;
             bottom: 0;
             min-width: 100%;
@@ -29,14 +31,14 @@
             left: 0;
             right: 0;
             bottom: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             color: white; /* 텍스트 색상 */
-            text-align: center;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
     </style>
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
 <body>
 
@@ -62,21 +64,29 @@
     <section>
         <div id="fullpage">
             <div class="section" id="section1">
-                <video data-autoplay>
+                <video data-autoplay muted loop>
                     <source data-src="images/bg1.mp4" type="video/mp4" />
                 </video>
-                <div class="video-overlay">
-                    <h1>PLAN99</h1>
-                    <h4>기계, 전자, 소프트웨어를 아우르는 <strong>쌍둥이</strong> 학부생 연구 팀입니다.</h4>
+                <div class="video-overlay" style="text-align: center; padding-top: 200px; font-family: 'Rubik Doodle Shadow">
+                    <h1 class="m-5 display-1 animate__animated aIn__backInLeft aOut__fadeOutDown animate__delay-1s">PLAN99</h1>
+                    <h4 class="animate__animated aIn__backInLeft aOut__fadeOutDown animate__delay-2s">99 Plans, 99 years of the future</h4>
+                    <div class="animate__animated aIn__backInLeft aOut__fadeOutDown animate__delay-4s" style="margin-top: 150px">
+                        <i class="fas fa-arrow-down fa-5x" style="animation: blink 2s linear infinite;"></i>
+                    </div>
                 </div>
             </div>
             <div class="section" id="section2">
-                <div class="slide"><h1>Simple Demo</h1></div>
-                <div class="slide active"><h1>Only text</h1></div>
-                <div class="slide"><h1>And text</h1></div>
-                <div class="slide"><h1>And more text</h1></div>
+                <video data-autoplay muted loop>
+                    <source data-src="images/bg2.mp4" type="video/mp4" />
+                </video>
+                <div class="video-overlay text-center" style="font-family: 'Press Start 2P';">
+                    <div class="p-5" style=" margin-bottom: 50px">
+                        <h6 id="typing" style="white-space: pre; line-height: 30px"></h6>
+                    </div>
+                    <div id="profileButton"></div>
+                    <h3 style="position: absolute; bottom: 15%; width: 100%; animation: blink 1s linear infinite;" class="text-success text-center" id="seeAllButton">Press [E] To See ALL</h3>
+                </div>
             </div>
-            <div class="section" id="section3"><h1>No wraps, no extra markup</h1></div>
             <div class="section" id="section4"><h1>Just the simplest demo ever</h1></div>
         </div>
     </section>
@@ -87,12 +97,105 @@
 
     <!-- AOS JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
+
     <script type="text/javascript">
+        const typingElement = document.getElementById('typing');
+        const text = "" +
+            "Hello, we are a development team of twin undergraduate students, [Plan99].\n" +
+            "We are striving to build expertise in three core engineering fields:\n" +
+            "mechanical, electronic, and software engineering.\n" +
+            "\n" +
+            "Our team name, Plan99, symbolizes our determination to go beyond Plan A and Plan B,\n" +
+            "creating flawless technology with 99 different plans, \n" +
+            "as well as to lead the next 99 years of future technologies.";
+        let i = 0;
+        let stopTyping = false
+
         var myFullpage = new fullpage('#fullpage', {
             sectionsColor: ['#f2f2f2', '#4BBFC3', '#7BAABE', 'whitesmoke', '#ccddff'],
-            anchors:['home', 'members', 'thirdPage', 'a']
-        });
-        let videoElem = document.getElementById("video");
+            anchors:['home', 'members', 'thirdPage', 'a'],
+            licenseKey: 'gplv3-license',
+            afterLoad: function(origin, destination, direction, trigger) {
+                const animations = destination.item.children[0].getElementsByClassName('animate__animated')
+                for (let i = 0; i < animations.length; i++) {
+                    animations[i].classList.forEach((e) => {
+                        if (e.startsWith('aOut__')) {
+                            const ani_name = e.replace('aOut__', '')
+                            animations[i].classList.remove('animate__' + ani_name)
+                        }
+                        if (e.startsWith('aIn__')) {
+                            const ani_name = e.replace('aIn__', '')
+                            animations[i].classList.add('animate__' + ani_name)
+                        }
+                    })
+                }
+                if (origin.index !== destination.index) {
+                    const origin_animations = origin.item.children[0].getElementsByClassName('animate__animated')
+                    for (let i = 0; i < origin_animations.length; i++) {
+                        origin_animations[i].classList.forEach((e) => {
+                            if (e.startsWith('aIn__')) {
+                                const ani_name = e.replace('aIn__', '')
+                                origin_animations[i].classList.remove('animate__' + ani_name)
+                            }
+                            if (e.startsWith('aOut__')) {
+                                const ani_name = e.replace('aOut__', '')
+                                origin_animations[i].classList.add('animate__' + ani_name)
+                            }
+                        })
+
+                    }
+                }
+                document.getElementById('typing').innerHTML = ''
+                i = 0
+                removeWhoWeAreLink()
+                if (destination.index === 1) {
+                    stopTyping = false
+                    document.addEventListener('keydown', (e) => {
+                        if (e.code === 'KeyE') {
+                            stopTyping = true
+                            document.getElementById('typing').innerHTML = text
+                            addWhoWeAreLink()
+                        }
+                    })
+                    typeWriter()
+                } else {
+                    stopTyping = true
+                }
+            }
+        })
+
+        function typeWriter() {
+            if (i < text.length) {
+                if (stopTyping) {
+                    return
+                }
+                typingElement.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 70); // 타이핑 속도 조절
+            }
+            if (i === text.length) {
+                addWhoWeAreLink()
+            }
+        }
+
+        function addWhoWeAreLink() {
+            const profileButton = document.getElementById('profileButton')
+            profileButton.innerHTML='<button class="btn btn-outline-light p-5" style="border: 1px solid white; width: 40%;">\n' +
+                '                            <div style="margin-bottom: 20px">Click this to see More!</div>\n' +
+                '                            <div>\n' +
+                '                                <img src="/images/profile1.jpeg" alt="profile" style="width: 200px; border-radius: 50%">\n' +
+                '                                <img src="/images/profile1.jpeg" alt="profile" style="width: 200px; border-radius: 50%">\n' +
+                '                            </div>\n' +
+                '                        </button>'
+            const seeAllButton = document.getElementById('seeAllButton')
+            seeAllButton.style.display = 'none'
+        }
+        function removeWhoWeAreLink() {
+            const profileButton = document.getElementById('profileButton')
+            profileButton.innerHTML = ''
+            const seeAllButton = document.getElementById('seeAllButton')
+            seeAllButton.style.display = 'block'
+        }
     </script>
 </body>
 </html>
