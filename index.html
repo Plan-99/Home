@@ -233,8 +233,8 @@
             profileButton.innerHTML='<div><button class="btn btn-outline-light p-5 animate__animated animate__bounceIn" style="border: 1px solid white; width: 40%;">\n' +
                 '                            <div style="margin-bottom: 20px">Click this to know Us More!</div>\n' +
                 '                            <div>\n' +
-                '                                <img src="/images/profile1.png" alt="profile" style="width: 200px; border-radius: 50%">\n' +
-                '                                <img src="/images/profile1.png" alt="profile" style="width: 200px; border-radius: 50%">\n' +
+                '                                <img src="images/profile1.png" alt="profile" style="width: 200px; border-radius: 50%">\n' +
+                '                                <img src="images/profile1.png" alt="profile" style="width: 200px; border-radius: 50%">\n' +
                 '                            </div>\n' +
                 '                        </button></div>' +
                 '                        <i class="fas fa-arrow-down fa-3x" style="animation: blink 2s linear infinite; margin-top: 20px"></i>'
@@ -259,7 +259,7 @@
             const projectField = document.getElementById('projectField');
             const num = Math.floor(Math.random() * ProjectMap.length)
             const innerHtml =  `<a href="${ProjectMap[num].name.url}" style="border-radius: 10%; animation: come${direction} 5s linear infinite; position: absolute; ${direction}: 40%; color: white">
-                        <img src="/images/project${num}.png" style="width: 300px;">
+                        <img src="images/project${num}.png" style="width: 300px;">
                         <h4>${ProjectMap[num].name}</h4>
                     </a>`
             projectField.insertAdjacentHTML('beforeend', innerHtml);
@@ -310,7 +310,7 @@
             AbilityMap.forEach((e, index) => {
                 projectField.innerHTML += `
                         <div class="text-center col-1 animate__animated aIn__bounceInUp aOut__bounceOutDown ability" style="margin-bottom: 100px; animation-delay: ${index*0.2}s">
-                            <img src="/images/ability${index}.png" class="card-img-top" style="width: 4rem;">
+                            <img src="images/ability${index}.png" class="card-img-top" style="width: 4rem;">
                             <div>${e.name}</div>
                         </div>`
             })
