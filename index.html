@@ -256,13 +256,13 @@
 
         function addWhoWeAreLink() {
             const profileButton = document.getElementById('profileButton')
-            profileButton.innerHTML='<div><button class="btn btn-outline-light p-5 animate__animated animate__bounceIn" style="border: 1px solid white; width: 40%;">\n' +
+            profileButton.innerHTML='<a href="https://www.notion.so/Plan99-772975a6f5c84c4894729225b3662678"><button class="btn btn-outline-light p-5 animate__animated animate__bounceIn" style="border: 1px solid white; width: 40%;">\n' +
                 '                            <div style="margin-bottom: 20px">Click this to know Us More!</div>\n' +
                 '                            <div>\n' +
                 '                                <img src="images/profile1.jpg" alt="profile" style="width: 200px; border-radius: 50%">\n' +
-                '                                <img src="images/profile1.jpg" alt="profile" style="width: 200px; border-radius: 50%">\n' +
+                '                                <img src="images/profile2.jpg" alt="profile" style="width: 200px; border-radius: 50%">\n' +
                 '                            </div>\n' +
-                '                        </button></div>' +
+                '                        </button></a>' +
                 '                        <i class="fas fa-arrow-down fa-3x" style="animation: blink 2s linear infinite; margin-top: 20px"></i>'
             const seeAllButton = document.getElementById('seeAllButton')
             seeAllButton.style.display = 'none'
@@ -276,15 +276,15 @@
 
         function showProjects(direction) {
             const ProjectMap = [
-                { name: 'Korean Twins Youtube Channel', url: '' },
-                { name: 'Training Camp Newsletter', url: '' },
-                { name: 'Seopli, Dating App', url: '' },
-                { name: 'ShowStock, AI Stock Predictor', url: '' },
-                { name: 'PIK, Club Managing Solution', url: '' },
+                { name: 'Korean Twins Youtube Channel', url: 'https://www.notion.so/Plan99-772975a6f5c84c4894729225b3662678?pvs=4#b76b8c9c34b94bf9a1c3f67fa8bac9d5' },
+                { name: 'Training Camp Newsletter', url: 'https://www.notion.so/7058697a1e524c67ad9ca9fb22b77cfd?pvs=4' },
+                { name: 'Seopli, Dating App', url: 'https://www.notion.so/f67e63f635844a919a2e017d21611192?pvs=4' },
+                { name: 'ShowStock, AI Stock Predictor', url: 'https://www.notion.so/fcca055d1d134f7e8e2c1185b725fb1a?pvs=4' },
+                { name: 'PIK, Club Managing Solution', url: 'https://www.notion.so/Pik-51674d2f733f48f382a1c5afadca0e01?pvs=4' },
             ]
             const projectField = document.getElementById('projectField');
             const num = Math.floor(Math.random() * ProjectMap.length)
-            const innerHtml =  `<a href="${ProjectMap[num].name.url}" style="border-radius: 10%; animation: come${direction} 5s linear infinite; position: absolute; ${direction}: 40%; color: white">
+            const innerHtml =  `<a href="${ProjectMap[num].url}" style="border-radius: 10%; animation: come${direction} 5s linear infinite; position: absolute; ${direction}: 40%; color: white">
                         <img src="images/project${num}.png" style="width: 300px;">
                         <h4>${ProjectMap[num].name}</h4>
                     </a>`
